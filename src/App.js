@@ -2,7 +2,8 @@ import Card from './components/Card';
 import Categories from './components/Categories';
 import Header from './components/Header';
 import Sort from './components/Sort';
-import './scss/app.scss'
+import { data } from './data/data';
+import './scss/app.scss';
 
 const App = () => {
     return (
@@ -16,13 +17,9 @@ const App = () => {
                     </div>
                     <h2 className='content__title'>Nintendo Switch games</h2>
                     <div className='content__items'>
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
+                        {data.map((game) => (
+                            <Card key={game.id} {...game} />
+                        ))}
                     </div>
                 </div>
             </main>

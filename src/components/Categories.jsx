@@ -1,15 +1,24 @@
+import { useState } from 'react';
+import { genres } from '../data/data';
+
 const Categories = () => {
+    const [activeCategory, setActiveCategory] = useState('m0');
+
+    const chooseCategoryHandler = (id) => {
+        setActiveCategory(id);
+    };
+
     return (
         <div className='categories'>
             <ul>
-                <li className='active'>All</li>
-                <li>Action</li>
-                <li>Arcade</li>
-                <li>Fighting</li>
-                <li>Platformer</li>
-                <li>Racing</li>
-                <li>RPG</li>
-                <li>Strategy</li>
+                {genres.map((genre) => (
+                    <li
+                        key={genre.id}
+                        onClick={() => chooseCategoryHandler(genre.id)}
+                        className={genre.id === activeCategory ? 'active' : ''}>
+                        {genre.name}
+                    </li>
+                ))}
             </ul>
         </div>
     );

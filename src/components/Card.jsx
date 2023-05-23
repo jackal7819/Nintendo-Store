@@ -1,32 +1,52 @@
+import { useState } from 'react';
 import { CgMathPlus } from 'react-icons/cg';
 
-const Card = () => {
+const Card = (props) => {
+    const { url, title, price, types, kindes } = props;
+    const [activeKind, setActiveKind] = useState(kindes[0]);
+    const [activeType, setActiveType] = useState(types[0]);
+
+    const chooseKindHandler = (kind) => {
+        setActiveKind(kind);
+    };
+
+    const chooseTypeHandler = (type) => {
+        setActiveType(type);
+    };
+
     return (
         <div className='card'>
-            <img
-                className='card__image'
-                src='https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_801/b_white/f_auto/q_auto/ncom/software/switch/70010000063709/32b85837beea0eee31220a59e247219662de4011f7a8c18fce61cf99a4933eb7'
-                alt='Pizza'
-            />
-            <h3 className='card__title'>Metroid Prime™ Remastered</h3>
+            <img className='card__image' src={url} alt='Nintendo Game' />
+            <h3 className='card__title'>{title}</h3>
             <div className='card__selector'>
                 <ul>
-                    <li className='active'>Digital</li>
-                    <li>Physical</li>
+                {types.map((type) => (
+                        <li
+                            key={type}
+                            onClick={() => chooseTypeHandler(type)}
+                            className={type === activeType ? 'active' : ''}>
+                            {type}
+                        </li>
+                    ))}
                 </ul>
-                {/* <ul>
-                    <li className='active'>Standart</li>
-                    <li>Gold</li>
-                    <li>Deluxe</li>
-                </ul> */}
+                <ul>
+                    {kindes.map((kind) => (
+                        <li
+                            key={kind}
+                            onClick={() => chooseKindHandler(kind)}
+                            className={kind === activeKind ? 'active' : ''}>
+                            {kind}
+                        </li>
+                    ))}
+                </ul>
             </div>
             <div className='card__bottom'>
-                <div className='card__price'>$59.99</div>
-                <div className='button button--outline button--add'>
+                <div className='card__price'>${price}</div>
+                <button className='button button--outline button--add'>
                     <CgMathPlus size={20} />
                     <span>Add</span>
-                    <i>2</i>
-                </div>
+                    <i>0</i>
+                </button>
             </div>
         </div>
     );

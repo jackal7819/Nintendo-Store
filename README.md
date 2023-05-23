@@ -4,7 +4,7 @@
 
 ## React, SCSS, Redux Toolkit, Firebase
 
-### Demo - https://reduxcart.onrender.com
+### Demo - https://nintendo-store.onrender.com
 
 ## Available Scripts
 
