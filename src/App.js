@@ -9,14 +9,11 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <RootLayout component={Home} />,
+        errorElement: <RootLayout component={Nothing} />,
     },
     {
         path: '/cart',
         element: <RootLayout component={Cart} />,
-    },
-    {
-        path: '*',
-        element: <RootLayout component={Nothing} />,
     },
 ]);
 
