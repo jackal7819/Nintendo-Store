@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
 
-const Sort = () => {
-    const list = ['Popularity', 'Price', 'Title'];
+const Sort = ({value, sortTypeHandler}) => {
+    const list = ['Popularity', 'Price (high to low)', 'Price (low to high)', 'Title (A-Z)', 'Title (Z-A)'];
     const [open, setOpen] = useState(false);
-    const [selected, setSelected] = useState(0);
 
     const openHandler = () => {
         setOpen(!open);
     };
 
-    const selectedItemHandler = (index) => {
-        setSelected(index);
+    const selectedItemHandler = (name) => {
+        sortTypeHandler(name);
         setOpen(false);
     };
 
@@ -21,16 +20,16 @@ const Sort = () => {
                 {open && <MdKeyboardArrowUp size={25} />}
                 {!open && <MdKeyboardArrowDown size={25} />}
                 <b>Sort by:</b>
-                <span onClick={openHandler}>{list[selected]}</span>
+                <span onClick={openHandler}>{value}</span>
             </div>
             {open && (
                 <div className='sort__popup'>
                     <ul>
-                        {list.map((item, index) => (
+                        {list.map((item) => (
                             <li
                                 key={item}
-                                onClick={() => selectedItemHandler(index)}
-                                className={selected === index ? 'active' : ''}>
+                                onClick={() => selectedItemHandler(item)}
+                                className={value === item ? 'active' : ''}>
                                 {item}
                             </li>
                         ))}

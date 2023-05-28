@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const genres = [
     { id: 'm0', name: 'All' },
     { id: 'm1', name: 'Action' },
@@ -11,12 +9,7 @@ const genres = [
     { id: 'm7', name: 'Strategy' },
 ];
 
-const Categories = () => {
-    const [activeCategory, setActiveCategory] = useState('m0');
-
-    const chooseCategoryHandler = (id) => {
-        setActiveCategory(id);
-    };
+const Categories = ({ value, categoryHandler }) => {
 
     return (
         <div className='categories'>
@@ -24,8 +17,8 @@ const Categories = () => {
                 {genres.map((genre) => (
                     <li
                         key={genre.id}
-                        onClick={() => chooseCategoryHandler(genre.id)}
-                        className={genre.id === activeCategory ? 'active' : ''}>
+                        onClick={() => categoryHandler(genre.name)}
+                        className={genre.name === value ? 'active' : ''}>
                         {genre.name}
                     </li>
                 ))}
