@@ -1,18 +1,22 @@
-import { useState } from 'react';
+import { useState, createContext } from 'react';
 import Header from './Header';
+
+export const SearchContext = createContext('');
 
 const RootLayout = ({ component: Component }) => {
     const [searchValue, setSearchValue] = useState('');
 
     return (
-        <div className='root'>
-            <Header searchValue={searchValue} setSearchValue={setSearchValue} />
-            <main className='content'>
-                <div className='container'>
-                    <Component searchValue={searchValue} />
-                </div>
-            </main>
-        </div>
+        <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+            <div className='root'>
+                <Header />
+                <main className='content'>
+                    <div className='container'>
+                        <Component />
+                    </div>
+                </main>
+            </div>
+        </SearchContext.Provider>
     );
 };
 

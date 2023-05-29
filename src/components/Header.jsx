@@ -3,7 +3,7 @@ import { SiNintendoswitch } from 'react-icons/si';
 import { RiShoppingCartFill } from 'react-icons/ri';
 import Search from './Search';
 
-const Header = ({ searchValue, setSearchValue }) => {
+const Header = () => {
     return (
         <header className='header'>
             <div className='container'>
@@ -14,10 +14,7 @@ const Header = ({ searchValue, setSearchValue }) => {
                         <p>The Best Gaming Store in the World</p>
                     </div>
                 </Link>
-                <Search
-                    searchValue={searchValue}
-                    setSearchValue={setSearchValue}
-                />
+                <Search />
                 <div className='header__cart'>
                     <Link to='/cart' className='button button--cart'>
                         <span>$152.99</span>

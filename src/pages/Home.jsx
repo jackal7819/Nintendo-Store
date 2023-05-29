@@ -1,11 +1,13 @@
-import { useEffect, useState, useMemo } from 'react';
-import Card from '../components/Card';
-import Sort from '../components/Sort';
-import Sceleton from '../components/Sceleton';
+import { useEffect, useState, useMemo, useContext } from 'react';
+import { SearchContext } from '../components/RootLayout';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
+import Sceleton from '../components/Sceleton';
+import Sort from '../components/Sort';
+import Card from '../components/Card';
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+    const { searchValue } = useContext(SearchContext);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [categoryName, setCategoryName] = useState('All');
@@ -30,13 +32,6 @@ const Home = ({ searchValue }) => {
             setCurrentPage(0);
         }
     }, [categoryName]);
-
-    let maxPage;
-    if (categoryName === 'All') {
-        maxPage = 4;
-    } else {
-        maxPage = 1;
-    }
 
     const filteredItems = useMemo(() => {
         const sortFunctions = {
@@ -64,6 +59,19 @@ const Home = ({ searchValue }) => {
     const dummyItems = [...new Array(4)].map((_, index) => (
         <Sceleton key={index} />
     ));
+
+    let maxPage;
+    if (searchGames.length > 4) {
+        maxPage = Math.ceil(searchGames.length / 4);
+        if (currentPage >= maxPage) {
+            setCurrentPage(0);
+        }
+    } else {
+        maxPage = 1;
+        if (currentPage !== 0) {
+            setCurrentPage(0);
+        }
+    }
 
     return (
         <>

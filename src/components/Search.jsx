@@ -1,8 +1,12 @@
+import { useContext } from 'react';
+import { SearchContext } from './RootLayout';
 import { RiSearch2Line } from 'react-icons/ri';
 import { TbArrowsCross } from 'react-icons/tb';
 import styles from './Search.module.scss';
 
-const Search = ({ searchValue, setSearchValue }) => {
+const Search = () => {
+    const { searchValue, setSearchValue } = useContext(SearchContext);
+
     return (
         <div className={styles.searching}>
             <RiSearch2Line size={20} />
