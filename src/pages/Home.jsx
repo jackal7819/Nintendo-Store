@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Card from '../components/Card';
+import Sort from '../components/Sort';
 import Sceleton from '../components/Sceleton';
 import Categories from '../components/Categories';
-import Sort from '../components/Sort';
+import Pagination from '../components/Pagination';
 
-const Home = () => {
+const Home = ({ searchValue }) => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [categoryName, setCategoryName] = useState('All');
     const [sortType, setSortType] = useState('Popularity');
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
         setLoading(true);
@@ -23,19 +25,45 @@ const Home = () => {
         window.scrollTo(0, 0);
     }, []);
 
-    const sortFunctions = {
-        Popularity: (a, b) => b.rating - a.rating,
-        'Price (low to high)': (a, b) => a.price - b.price,
-        'Price (high to low)': (a, b) => b.price - a.price,
-        'Title (A-Z)': (a, b) => a.title.localeCompare(b.title),
-        'Title (Z-A)': (a, b) => b.title.localeCompare(a.title),
-    };
+    useEffect(() => {
+        if (categoryName !== 'All') {
+            setCurrentPage(0);
+        }
+    }, [categoryName]);
 
-    const filteredItems = (
-        categoryName === 'All'
-            ? items
-            : items.filter((game) => game.category === categoryName)
-    ).sort(sortFunctions[sortType] || ((a, b) => 0));
+    let maxPage;
+    if (categoryName === 'All') {
+        maxPage = 4;
+    } else {
+        maxPage = 1;
+    }
+
+    const filteredItems = useMemo(() => {
+        const sortFunctions = {
+            Popularity: (a, b) => b.rating - a.rating,
+            'Price (low to high)': (a, b) => a.price - b.price,
+            'Price (high to low)': (a, b) => b.price - a.price,
+            'Title (A-Z)': (a, b) => a.title.localeCompare(b.title),
+            'Title (Z-A)': (a, b) => b.title.localeCompare(a.title),
+        };
+        return (
+            categoryName === 'All'
+                ? items
+                : items.filter((game) => game.category === categoryName)
+        ).sort(sortFunctions[sortType] || ((a, b) => 0));
+    }, [items, categoryName, sortType]);
+
+    const searchGames = filteredItems.filter((game) =>
+        game.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    const games = searchGames.map((game) => <Card key={game.id} {...game} />);
+
+    const gamesOnPage = games.slice(currentPage * 4, (currentPage + 1) * 4);
+
+    const dummyItems = [...new Array(4)].map((_, index) => (
+        <Sceleton key={index} />
+    ));
 
     return (
         <>
@@ -51,15 +79,13 @@ const Home = () => {
             </div>
             <h2 className='content__title'>Nintendo Switch games</h2>
             <div className='content__items'>
-                {!loading &&
-                    filteredItems
-                        .slice()
-                        .map((game) => <Card key={game.id} {...game} />)}
-                {loading &&
-                    [...new Array(4)].map((_, index) => (
-                        <Sceleton key={index} />
-                    ))}
+                {loading ? dummyItems : gamesOnPage}
             </div>
+            <Pagination
+                pageHandler={(number) => setCurrentPage(number)}
+                currentPage={currentPage}
+                maxPage={maxPage}
+            />
         </>
     );
 };

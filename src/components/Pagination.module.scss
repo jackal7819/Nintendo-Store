@@ -1,0 +1,57 @@
+.pages {
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+    color: #7b7b7b;
+
+    li {
+        border-radius: 10px;
+
+        &:hover {
+            background: #7b7b7b;
+            
+            a {
+                color: #fff;
+            }
+
+            polygon {
+                fill: #fff;
+            }
+        }
+
+        svg {
+            margin-top: 12px;
+
+            polygon {
+                fill: #7b7b7b;
+            }
+        }
+
+        a {
+            color: #7b7b7b;
+            display: inline-block;
+            border: 1px solid #7b7b7b;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    }
+
+    :global {
+        .selected {
+            a {
+                background: #7b7b7b;
+                color: #fff;
+            }
+        }
+
+        .disabled {
+            polygon {
+                fill: #d6d6d6;
+            }
+        }
+    }
+}
