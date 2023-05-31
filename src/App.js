@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './components/RootLayout';
 import Nothing from './pages/Nothing';
-import Cart from './pages/Cart';
 import Home from './pages/Home';
+import Cart from './pages/Cart';
 import './scss/app.scss';
 
 const router = createBrowserRouter([

@@ -1,4 +1,6 @@
 import { useEffect, useState, useMemo, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { chooseCategory } from '../store/filterSlice';
 import { SearchContext } from '../components/RootLayout';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
@@ -10,9 +12,13 @@ const Home = () => {
     const { searchValue } = useContext(SearchContext);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [categoryName, setCategoryName] = useState('All');
-    const [sortType, setSortType] = useState('Popularity');
     const [currentPage, setCurrentPage] = useState(0);
+
+    const { category, sort } = useSelector((state) => state.filter);
+    const dispatch = useDispatch();
+    const categoryHandler = (name) => {
+        dispatch(chooseCategory(name));
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -28,10 +34,10 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        if (categoryName !== 'All') {
+        if (category !== 'All') {
             setCurrentPage(0);
         }
-    }, [categoryName]);
+    }, [category]);
 
     const filteredItems = useMemo(() => {
         const sortFunctions = {
@@ -42,11 +48,11 @@ const Home = () => {
             'Title (Z-A)': (a, b) => b.title.localeCompare(a.title),
         };
         return (
-            categoryName === 'All'
+            category === 'All'
                 ? items
-                : items.filter((game) => game.category === categoryName)
-        ).sort(sortFunctions[sortType] || ((a, b) => 0));
-    }, [items, categoryName, sortType]);
+                : items.filter((game) => game.category === category)
+        ).sort(sortFunctions[sort] || ((a, b) => 0));
+    }, [items, category, sort]);
 
     const searchGames = filteredItems.filter((game) =>
         game.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -77,13 +83,10 @@ const Home = () => {
         <>
             <div className='content__top'>
                 <Categories
-                    value={categoryName}
-                    categoryHandler={(name) => setCategoryName(name)}
+                    value={category}
+                    categoryHandler={(name) => categoryHandler(name)}
                 />
-                <Sort
-                    value={sortType}
-                    sortTypeHandler={(name) => setSortType(name)}
-                />
+                <Sort />
             </div>
             <h2 className='content__title'>Nintendo Switch games</h2>
             <div className='content__items'>

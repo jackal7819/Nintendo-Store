@@ -1,16 +1,27 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { chooseSort } from '../store/filterSlice';
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
 
-const Sort = ({value, sortTypeHandler}) => {
-    const list = ['Popularity', 'Price (high to low)', 'Price (low to high)', 'Title (A-Z)', 'Title (Z-A)'];
+const list = [
+    'Popularity',
+    'Price (high to low)',
+    'Price (low to high)',
+    'Title (A-Z)',
+    'Title (Z-A)',
+];
+
+const Sort = () => {
     const [open, setOpen] = useState(false);
+    const sort = useSelector((state) => state.filter.sort);
+    const dispatch = useDispatch();
 
     const openHandler = () => {
         setOpen(!open);
     };
 
     const selectedItemHandler = (name) => {
-        sortTypeHandler(name);
+        dispatch(chooseSort(name));
         setOpen(false);
     };
 
@@ -20,7 +31,7 @@ const Sort = ({value, sortTypeHandler}) => {
                 {open && <MdKeyboardArrowUp size={25} />}
                 {!open && <MdKeyboardArrowDown size={25} />}
                 <b>Sort by:</b>
-                <span onClick={openHandler}>{value}</span>
+                <span onClick={openHandler}>{sort}</span>
             </div>
             {open && (
                 <div className='sort__popup'>
@@ -29,7 +40,7 @@ const Sort = ({value, sortTypeHandler}) => {
                             <li
                                 key={item}
                                 onClick={() => selectedItemHandler(item)}
-                                className={value === item ? 'active' : ''}>
+                                className={sort === item ? 'active' : ''}>
                                 {item}
                             </li>
                         ))}
