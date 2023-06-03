@@ -1,6 +1,10 @@
 import { useEffect, useState, useMemo, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { chooseCategory } from '../store/filterSlice';
+import axios from 'axios';
+import {
+    chooseCategory,
+    chooseCurrentPage,
+} from '../store/filterSlice';
 import { SearchContext } from '../components/RootLayout';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
@@ -9,25 +13,27 @@ import Sort from '../components/Sort';
 import Card from '../components/Card';
 
 const Home = () => {
+    const dispatch = useDispatch();
+
+    const { category, sort, currentPage } = useSelector(
+        (state) => state.filter
+    );
+
     const { searchValue } = useContext(SearchContext);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(0);
 
-    const { category, sort } = useSelector((state) => state.filter);
-    const dispatch = useDispatch();
     const categoryHandler = (name) => {
         dispatch(chooseCategory(name));
     };
 
     useEffect(() => {
-        setLoading(true);
-        fetch(
-            'https://nintendo-store-default-rtdb.europe-west1.firebasedatabase.app/data.json'
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                setItems(data);
+        axios
+            .get(
+                'https://nintendo-store-default-rtdb.europe-west1.firebasedatabase.app/data.json'
+            )
+            .then((res) => {
+                setItems(res.data);
                 setLoading(false);
             });
         window.scrollTo(0, 0);
@@ -35,9 +41,9 @@ const Home = () => {
 
     useEffect(() => {
         if (category !== 'All') {
-            setCurrentPage(0);
+            dispatch(chooseCurrentPage(0));
         }
-    }, [category]);
+    }, [category, dispatch]);
 
     const filteredItems = useMemo(() => {
         const sortFunctions = {
@@ -70,12 +76,12 @@ const Home = () => {
     if (searchGames.length > 4) {
         maxPage = Math.ceil(searchGames.length / 4);
         if (currentPage >= maxPage) {
-            setCurrentPage(0);
+            chooseCurrentPage(0);
         }
     } else {
         maxPage = 1;
         if (currentPage !== 0) {
-            setCurrentPage(0);
+            chooseCurrentPage(0);
         }
     }
 
@@ -92,11 +98,7 @@ const Home = () => {
             <div className='content__items'>
                 {loading ? dummyItems : gamesOnPage}
             </div>
-            <Pagination
-                pageHandler={(number) => setCurrentPage(number)}
-                currentPage={currentPage}
-                maxPage={maxPage}
-            />
+            <Pagination maxPage={maxPage} />
         </>
     );
 };
