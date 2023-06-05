@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { SiNintendoswitch } from 'react-icons/si';
 import { RiShoppingCartFill } from 'react-icons/ri';
 import Search from './Search';
 
 const Header = () => {
+    const { totalPrice, items } = useSelector((state) => state.cart);
+
     return (
         <header className='header'>
             <div className='container'>
@@ -17,10 +20,10 @@ const Header = () => {
                 <Search />
                 <div className='header__cart'>
                     <Link to='/cart' className='button button--cart'>
-                        <span>$152.99</span>
+                        <span>${totalPrice.toFixed(2)}</span>
                         <div className='button__delimiter'></div>
                         <RiShoppingCartFill size={25} />
-                        <span>3</span>
+                        <span>{items.length}</span>
                     </Link>
                 </div>
             </div>

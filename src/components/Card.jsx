@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { CgMathPlus } from 'react-icons/cg';
+import { addItem } from '../store/cartSlice';
 
-const Card = (props) => {
-    const { url, title, price, types, kindes } = props;
+const Card = ({ id, url, title, price, types, kindes }) => {
+    const dispatch = useDispatch();
     const [activeKind, setActiveKind] = useState(kindes[0]);
     const [activeType, setActiveType] = useState(types[0]);
 
@@ -14,13 +16,29 @@ const Card = (props) => {
         setActiveType(type);
     };
 
+    const itemAddHandler = () => {
+        const item = {
+            id,
+            url,
+            title,
+            price,
+            kind: activeKind,
+            type: activeType,
+        };
+        dispatch(addItem(item));
+    };
+
+    price += activeType === 'Physical' ? 10 : 0;
+    price += activeKind === 'Gold' ? 10 : 0;
+    price += activeKind === 'Deluxe' ? 20 : 0;
+
     return (
         <div className='card'>
             <img className='card__image' src={url} alt='Nintendo Game' />
             <h3 className='card__title'>{title}</h3>
             <div className='card__selector'>
                 <ul>
-                {types.map((type) => (
+                    {types.map((type) => (
                         <li
                             key={type}
                             onClick={() => chooseTypeHandler(type)}
@@ -41,11 +59,12 @@ const Card = (props) => {
                 </ul>
             </div>
             <div className='card__bottom'>
-                <div className='card__price'>${price}</div>
-                <button className='button button--outline button--add'>
+                <div className='card__price'>${price.toFixed(2)}</div>
+                <button
+                    onClick={itemAddHandler}
+                    className='button button--outline button--add'>
                     <CgMathPlus size={20} />
-                    <span>Add</span>
-                    <i>0</i>
+                    <span>Add</span> 
                 </button>
             </div>
         </div>

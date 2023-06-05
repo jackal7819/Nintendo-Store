@@ -1,10 +1,7 @@
 import { useEffect, useState, useMemo, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import {
-    chooseCategory,
-    chooseCurrentPage,
-} from '../store/filterSlice';
+import { chooseCategory, chooseCurrentPage } from '../store/filterSlice';
 import { SearchContext } from '../components/RootLayout';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
@@ -28,14 +25,19 @@ const Home = () => {
     };
 
     useEffect(() => {
-        axios
-            .get(
-                'https://nintendo-store-default-rtdb.europe-west1.firebasedatabase.app/data.json'
-            )
-            .then((res) => {
-                setItems(res.data);
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    'https://nintendo-store-default-rtdb.europe-west1.firebasedatabase.app/data.json'
+                );
+                setItems(response.data);
                 setLoading(false);
-            });
+            } catch (error) {
+                setLoading(false);
+                console.log('Failed to get data', error); 
+            }
+        };
+        fetchData();
         window.scrollTo(0, 0);
     }, []);
 
