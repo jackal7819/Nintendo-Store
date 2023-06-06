@@ -1,0 +1,46 @@
+.game {
+    display: flex;
+    gap: 40px;
+
+    @media (max-width: 1070px) {
+        flex-direction: column;
+    }
+
+    img {
+        border-radius: 10px;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    h3 {
+        font-size: 30px;
+        font-weight: 900;
+        letter-spacing: 1%;
+    }
+
+    .description {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        font-size: 18px;
+        width: 50%;
+
+        @media (max-width: 1070px) {
+            width: auto;
+        }
+    }
+
+    .item {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        font-weight: 700;
+    }
+}
+
+.nothing {
+    font-size: 42px;
+    font-weight: 700;
+    text-align: center;
+}

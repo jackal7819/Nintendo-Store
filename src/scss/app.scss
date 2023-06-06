@@ -326,7 +326,7 @@ body {
         gap: 40px;
 
         h2 {
-            font-size: 34px;
+            font-size: 40px;
             display: flex;
             align-items: center;
             gap: 20px;
@@ -341,7 +341,7 @@ body {
         }
 
         p {
-            font-size: 18px;
+            font-size: 20px;
             line-height: 145%;
             letter-spacing: 0.01em;
             color: #7b7b7b;
@@ -388,5 +388,25 @@ body {
                 fill: #7b7b7b;
             }
         }
+    }
+}
+
+.error {
+    padding: 100px 0;
+    text-align: center;
+
+    &__sad {
+        fill: #ffff00;
+    }
+
+    &__title {
+        font-size: 44px;
+        line-height: 64px;
+    }
+
+    &__text {
+        font-size: 22px;
+        max-width: 400px;
+        margin: 0 auto;
     }
 }

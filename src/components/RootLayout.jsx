@@ -1,22 +1,16 @@
-import { useState, createContext } from 'react';
+import { Outlet } from 'react-router-dom';
 import Header from './Header';
 
-export const SearchContext = createContext('');
-
-const RootLayout = ({ component: Component }) => {
-    const [searchValue, setSearchValue] = useState('');
-
+const RootLayout = () => {
     return (
-        <SearchContext.Provider value={{ searchValue, setSearchValue }}>
-            <div className='root'>
-                <Header />
-                <main className='content'>
-                    <div className='container'>
-                        <Component />
-                    </div>
-                </main>
-            </div>
-        </SearchContext.Provider>
+        <div className='root'>
+            <Header />
+            <main className='content'>
+                <div className='container'>
+                    <Outlet />
+                </div>
+            </main>
+        </div>
     );
 };
 

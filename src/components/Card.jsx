@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { CgMathPlus } from 'react-icons/cg';
 import { addItem } from '../store/cartSlice';
 
@@ -34,7 +35,9 @@ const Card = ({ id, url, title, price, types, kindes }) => {
 
     return (
         <div className='card'>
-            <img className='card__image' src={url} alt='Nintendo Game' />
+            <Link to={`/card/${id}`}>
+                <img className='card__image' src={url} alt='Nintendo Game' />
+            </Link>
             <h3 className='card__title'>{title}</h3>
             <div className='card__selector'>
                 <ul>
@@ -64,7 +67,7 @@ const Card = ({ id, url, title, price, types, kindes }) => {
                     onClick={itemAddHandler}
                     className='button button--outline button--add'>
                     <CgMathPlus size={20} />
-                    <span>Add</span> 
+                    <span>Add</span>
                 </button>
             </div>
         </div>

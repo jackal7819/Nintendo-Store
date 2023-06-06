@@ -7,7 +7,7 @@ const CartEmpty = () => {
     return (
         <div className='cart cart--empty'>
             <h2>
-                The cart is empty <TbMoodSad size={40} />
+                The cart is empty <TbMoodSad size={45} />
             </h2>
             <p>
                 You probably haven't ordered any games yet. To order games, go
