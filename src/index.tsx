@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import store from './store/store';
 import App from './App';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+root.render(
     <Provider store={store}>
         <App />
     </Provider>

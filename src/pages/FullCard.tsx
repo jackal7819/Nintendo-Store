@@ -1,13 +1,21 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './FullCard.module.scss';
 
-const FullCard = () => {
+const FullCard: FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const gameList = useSelector((state) => state.games.gameList);
-    const game = gameList.find((game) => game.id === id);
+    const game: {
+        id: string;
+        url: string;
+        title: string;
+        description: string;
+        release: string;
+        size: string;
+        price: number;
+    } = gameList.find((game: { id: string }) => game.id === id);
 
     useEffect(() => {
         if (!game) {

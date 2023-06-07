@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import ContentLoader from 'react-content-loader';
 
-const Sceleton = () => (
+const Sceleton: FC = () => (
     <ContentLoader
         speed={2}
         width={280}

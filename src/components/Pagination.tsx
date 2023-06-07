@@ -1,14 +1,15 @@
+import { FC } from 'react';
 import { FcNext, FcPrevious } from 'react-icons/fc';
 import { useSelector, useDispatch } from 'react-redux';
 import { chooseCurrentPage } from '../store/filterSlice';
 import ReactPaginate from 'react-paginate';
 import styles from './Pagination.module.scss';
 
-const Pagination = ({ maxPage }) => {
+const Pagination: FC = ({ maxPage }) => {
     const currentPage = useSelector((state) => state.filter.currentPage);
     const dispatch = useDispatch();
 
-    const pageCountHandler = (number) => {
+    const pageCountHandler = (number : number) => {
         dispatch(chooseCurrentPage(number));
     };
 

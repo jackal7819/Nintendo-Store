@@ -1,13 +1,17 @@
-import { Outlet } from 'react-router-dom';
+import { FC, ComponentType } from 'react';
 import Header from './Header';
 
-const RootLayout = () => {
+interface RootLayoutProps {
+    component: ComponentType;
+}
+
+const RootLayout: FC<RootLayoutProps> = ({ component: Component }) => {
     return (
         <div className='root'>
             <Header />
             <main className='content'>
                 <div className='container'>
-                    <Outlet />
+                    <Component />
                 </div>
             </main>
         </div>
