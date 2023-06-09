@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { FC, useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { chooseSort } from '../store/filterSlice';
+import { RootState } from '../store/store';
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
 
-const list = [
+const list: string[] = [
     'Popularity',
     'Price (high to low)',
     'Price (low to high)',
@@ -11,32 +12,32 @@ const list = [
     'Title (Z-A)',
 ];
 
-const Sort = () => {
+const Sort: FC = () => {
     const dispatch = useDispatch();
-    const sort = useSelector((state) => state.filter.sort);
+    const sort = useSelector((state: RootState) => state.filter.sort);
     const [open, setOpen] = useState(false);
-    const sortRef = useRef('div');
+    const sortRef = useRef<HTMLDivElement>(null);
 
     const openHandler = () => {
         setOpen(!open);
     };
 
-    const selectedItemHandler = (name) => {
+    const selectedItemHandler = (name: string) => {
         dispatch(chooseSort(name));
         setOpen(false);
     };
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!sortRef.current.contains(event.target)) {
+        const handleClickOutside: EventListener = (event: Event) => {
+            if (!sortRef.current?.contains(event.target as HTMLElement)) {
                 setOpen(false);
             }
         };
 
-        document.body.addEventListener('click', handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
 
         return () => {
-            document.body.removeEventListener('click', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
         };
     }, []);
 

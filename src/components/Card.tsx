@@ -1,19 +1,28 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CgMathPlus } from 'react-icons/cg';
 import { addItem } from '../store/cartSlice';
 
-const Card = ({ id, url, title, price, types, kindes }) => {
+type CardProps = {
+    id: string;
+    url: string;
+    title: string;
+    price: number;
+    types: string[];
+    kindes: string[];
+};
+
+const Card: FC<CardProps> = ({ id, url, title, price, types, kindes }) => {
     const dispatch = useDispatch();
     const [activeKind, setActiveKind] = useState(kindes[0]);
     const [activeType, setActiveType] = useState(types[0]);
 
-    const chooseKindHandler = (kind) => {
+    const chooseKindHandler = (kind: string) => {
         setActiveKind(kind);
     };
 
-    const chooseTypeHandler = (type) => {
+    const chooseTypeHandler = (type: string) => {
         setActiveType(type);
     };
 

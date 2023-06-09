@@ -1,19 +1,20 @@
-import { useRef } from 'react';
+import { FC, useRef, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { chooseSearchValue } from '../store/filterSlice';
 import { RiSearch2Line } from 'react-icons/ri';
 import { TbArrowsCross } from 'react-icons/tb';
+import { RootState } from '../store/store';
 import styles from './Search.module.scss';
 
-const Search = () => {
-    const inputRef = useRef();
+const Search: FC = () => {
+    const inputRef = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch();
 
-    const { searchValue } = useSelector((state) => state.filter);
+    const { searchValue } = useSelector((state: RootState) => state.filter);
 
     const onClear = () => {
         dispatch(chooseSearchValue(''));
-        inputRef.current.focus();
+        inputRef.current?.focus();
     };
 
     return (
@@ -22,7 +23,7 @@ const Search = () => {
             <input
                 ref={inputRef}
                 value={searchValue}
-                onChange={(event) =>
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
                     dispatch(chooseSearchValue(event.target.value))
                 }
                 className={styles.input}

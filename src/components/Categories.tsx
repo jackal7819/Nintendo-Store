@@ -1,4 +1,6 @@
-const genres = [
+import { FC } from 'react';
+
+const  genres: string[] = [
     'All',
     'Action',
     'Arcade',
@@ -9,7 +11,12 @@ const genres = [
     'Strategy',
 ];
 
-const Categories = ({ value, categoryHandler }) => {
+type CategoriesProps = {
+    value: string;
+    categoryHandler: (category: string) => void;
+}
+
+const Categories: FC<CategoriesProps> = ({ value, categoryHandler }) => {
     return (
         <div className='categories'>
             <ul>

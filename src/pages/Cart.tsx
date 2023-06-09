@@ -1,14 +1,16 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiShoppingCartLine, RiDeleteBinLine } from 'react-icons/ri';
 import { TiArrowBackOutline } from 'react-icons/ti';
 import { clearItems } from '../store/cartSlice';
+import { RootState } from '../store/store';
 import CartItem from '../components/CartItem';
 import CartEmpty from '../components/CartEmpty';
 
-const Cart = () => {
+const Cart: FC = () => {
     const dispatch = useDispatch();
-    const { totalPrice, items } = useSelector((state) => state.cart);
+    const { totalPrice, items } = useSelector((state: RootState) => state.cart);
 
     const clearItemsHandler = () => {
         dispatch(clearItems());

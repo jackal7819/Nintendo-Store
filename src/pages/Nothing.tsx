@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { TbMoodSad } from 'react-icons/tb';
 import styles from './Nothing.module.scss';
 
-const Nothing = () => {
+const Nothing: FC = () => {
     return (
         <div className={styles.description}>
             <TbMoodSad size={70} className={styles.description__sad} />

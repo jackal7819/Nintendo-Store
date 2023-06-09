@@ -1,12 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { SiNintendoswitch } from 'react-icons/si';
 import { RiShoppingCartFill } from 'react-icons/ri';
+import { RootState } from '../store/store';
 import Search from './Search';
 
-const Header = () => {
+const Header: FC = () => {
     const location = useLocation();
-    const { totalPrice, items } = useSelector((state) => state.cart);
+    const { totalPrice, items } = useSelector((state: RootState) => state.cart);
 
     return (
         <header className='header'>

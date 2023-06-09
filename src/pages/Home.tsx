@@ -1,23 +1,24 @@
-import { useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TbMoodSad } from 'react-icons/tb';
-import { fetchGames } from '../store/gameSlice';
+import { ListItem, fetchGames } from '../store/gameSlice';
 import { chooseCategory, chooseCurrentPage } from '../store/filterSlice';
+import { AppDispatch, RootState } from '../store/store';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
 import Sceleton from '../components/Sceleton';
 import Sort from '../components/Sort';
 import Card from '../components/Card';
 
-const Home = () => {
-    const dispatch = useDispatch();
+const Home: FC = () => {
+    const dispatch: AppDispatch = useDispatch();
 
     const { searchValue, category, sort, currentPage } = useSelector(
-        (state) => state.filter
+        (state: RootState) => state.filter
     );
-    const { gameList, status } = useSelector((state) => state.games);
+    const { gameList, status } = useSelector((state: RootState) => state.games);
 
-    const categoryHandler = (name) => {
+    const categoryHandler = (name: string) => {
         dispatch(chooseCategory(name));
     };
 
@@ -32,13 +33,20 @@ const Home = () => {
         }
     }, [category, dispatch]);
 
-    const filteredItems = useMemo(() => {
-        const sortFunctions = {
-            Popularity: (a, b) => b.rating - a.rating,
-            'Price (low to high)': (a, b) => a.price - b.price,
-            'Price (high to low)': (a, b) => b.price - a.price,
-            'Title (A-Z)': (a, b) => a.title.localeCompare(b.title),
-            'Title (Z-A)': (a, b) => b.title.localeCompare(a.title),
+    const filteredItems: ListItem[] = useMemo(() => {
+        const sortFunctions: Record<
+            string,
+            (a: ListItem, b: ListItem) => number
+        > = {
+            Popularity: (a: ListItem, b: ListItem) => b.rating - a.rating,
+            'Price (low to high)': (a: ListItem, b: ListItem) =>
+                a.price - b.price,
+            'Price (high to low)': (a: ListItem, b: ListItem) =>
+                b.price - a.price,
+            'Title (A-Z)': (a: ListItem, b: ListItem) =>
+                a.title.localeCompare(b.title),
+            'Title (Z-A)': (a: ListItem, b: ListItem) =>
+                b.title.localeCompare(a.title),
         };
         const filteredList =
             category === 'All'

@@ -1,9 +1,10 @@
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
+import { TbMoodSad } from 'react-icons/tb';
 import { RiShoppingCartFill } from 'react-icons/ri';
 import { TiArrowBackOutline } from 'react-icons/ti';
-import { TbMoodSad } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
 
-const CartEmpty = () => {
+const CartEmpty: FC = () => {
     return (
         <div className='cart cart--empty'>
             <h2>

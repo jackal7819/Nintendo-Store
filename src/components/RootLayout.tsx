@@ -1,7 +1,7 @@
 import { FC, ComponentType } from 'react';
 import Header from './Header';
 
-interface RootLayoutProps {
+type RootLayoutProps = {
     component: ComponentType;
 }
 

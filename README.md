@@ -2,7 +2,7 @@
 
 ## This is a Gaming Galaxy - the best store of Nintendo games
 
-## React, SCSS, Redux Toolkit, Firebase
+## React, TypeScript, SCSS, Redux Toolkit, Firebase
 
 ### Demo - https://nintendo-store.onrender.com
 

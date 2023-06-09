@@ -1,8 +1,18 @@
-import { GiSkullCrossedBones } from 'react-icons/gi';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { GiSkullCrossedBones } from 'react-icons/gi';
 import { removeItem } from '../store/cartSlice';
 
-const CartItem = ({ id, url, title, price, kind, type }) => {
+type CartItemProps = {
+    id: string;
+    url: string;
+    title: string;
+    price: number;
+    kind: string;
+    type: string;
+};
+
+const CartItem: FC<CartItemProps> = ({ id, url, title, price, kind, type }) => {
     const dispatch = useDispatch();
     const removeItemHandler = () => {
         dispatch(removeItem(id));
