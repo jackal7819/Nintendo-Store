@@ -9,14 +9,12 @@ type CartItem = {
     type: string;
 };
 
-interface CartState {
-    totalPrice: number;
-    items: CartItem[];
-}
+const storedCart = localStorage.getItem('cart');
+const parsedCart: CartItem[] = storedCart ? JSON.parse(storedCart) : [];
 
-const initialState: CartState = {
-    totalPrice: 0,
-    items: [],
+const initialState = {
+    totalPrice: parsedCart.reduce((sum, obj) => sum + obj.price, 0) as number,
+    items: parsedCart,
 };
 
 const cartSlice = createSlice({
@@ -24,7 +22,7 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addItem(state, action: PayloadAction<CartItem>) {
-            if (!state.items.find((obj) => obj.id === action.payload.id)) {
+            if (!state.items.some((obj) => obj.id === action.payload.id)) {
                 state.items.push(action.payload);
                 state.totalPrice = state.items.reduce(
                     (sum, obj) => sum + obj.price,

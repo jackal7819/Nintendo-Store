@@ -1,7 +1,6 @@
-import { FC, useState, useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { FC, useState, useRef, useEffect, memo } from 'react';
+import { useDispatch } from 'react-redux';
 import { chooseSort } from '../store/filterSlice';
-import { RootState } from '../store/store';
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
 
 const list: string[] = [
@@ -12,9 +11,12 @@ const list: string[] = [
     'Title (Z-A)',
 ];
 
-const Sort: FC = () => {
+type SortProps = {
+    sort: string;
+};
+
+const Sort: FC<SortProps> = memo(({ sort }) => {
     const dispatch = useDispatch();
-    const sort = useSelector((state: RootState) => state.filter.sort);
     const [open, setOpen] = useState(false);
     const sortRef = useRef<HTMLDivElement>(null);
 
@@ -65,6 +67,6 @@ const Sort: FC = () => {
             )}
         </div>
     );
-};
+});
 
 export default Sort;

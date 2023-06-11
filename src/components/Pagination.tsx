@@ -12,6 +12,7 @@ const Pagination: FC<{ maxPage: number }> = ({ maxPage }) => {
 
     const pageCountHandler = (number: number) => {
         dispatch(chooseCurrentPage(number));
+        window.scrollTo(0, 300);
     };
 
     return (

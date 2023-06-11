@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
-const  genres: string[] = [
+const genres: string[] = [
     'All',
     'Action',
     'Arcade',
@@ -14,9 +14,9 @@ const  genres: string[] = [
 type CategoriesProps = {
     value: string;
     categoryHandler: (category: string) => void;
-}
+};
 
-const Categories: FC<CategoriesProps> = ({ value, categoryHandler }) => {
+const Categories: FC<CategoriesProps> = memo(({ value, categoryHandler }) => {
     return (
         <div className='categories'>
             <ul>
@@ -31,6 +31,6 @@ const Categories: FC<CategoriesProps> = ({ value, categoryHandler }) => {
             </ul>
         </div>
     );
-};
+});
 
 export default Categories;

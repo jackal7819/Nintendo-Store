@@ -3,7 +3,7 @@ import Header from './Header';
 
 type RootLayoutProps = {
     component: ComponentType;
-}
+};
 
 const RootLayout: FC<RootLayoutProps> = ({ component: Component }) => {
     return (

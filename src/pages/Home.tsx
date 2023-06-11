@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TbMoodSad } from 'react-icons/tb';
 import { ListItem, fetchGames } from '../store/gameSlice';
@@ -18,9 +18,12 @@ const Home: FC = () => {
     );
     const { gameList, status } = useSelector((state: RootState) => state.games);
 
-    const categoryHandler = (name: string) => {
-        dispatch(chooseCategory(name));
-    };
+    const categoryHandler = useCallback(
+        (name: string) => {
+            dispatch(chooseCategory(name));
+        },
+        [dispatch]
+    );
 
     useEffect(() => {
         dispatch(fetchGames());
@@ -70,7 +73,7 @@ const Home: FC = () => {
         <Sceleton key={index} />
     ));
 
-    let maxPage;
+    let maxPage: number;
     if (searchGames.length > 4) {
         maxPage = Math.ceil(searchGames.length / 4);
         if (currentPage >= maxPage) {
@@ -101,7 +104,7 @@ const Home: FC = () => {
                             value={category}
                             categoryHandler={(name) => categoryHandler(name)}
                         />
-                        <Sort />
+                        <Sort sort={sort} />
                     </div>
                     <h2 className='content__title'>Nintendo Switch games</h2>
                     <div className='content__items'>
