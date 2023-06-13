@@ -77,12 +77,12 @@ const Home: FC = () => {
     if (searchGames.length > 4) {
         maxPage = Math.ceil(searchGames.length / 4);
         if (currentPage >= maxPage) {
-            chooseCurrentPage(0);
+            dispatch(chooseCurrentPage(0));
         }
     } else {
         maxPage = 1;
         if (currentPage !== 0) {
-            chooseCurrentPage(0);
+            dispatch(chooseCurrentPage(0));
         }
     }
 
